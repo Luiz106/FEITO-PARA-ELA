@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para o Meu Amor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #b86adf, #fcb6d0);
+      text-align: center;
+      color: white;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .video-container {
+      margin-top: 20px;
+    }
+    video {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: none;
+      border-radius: 15px;
+    }
+    .clock {
+      font-size: 1.6em;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .fotos-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 25px;
+    }
+    .fotos-container img {
+      width: 100%;
+      max-width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .fotos-container img:hover, iframe:hover {
+      transform: scale(1.05);
+    }
+    .romantic-text {
+      margin-top: 30px;
+      font-size: 1.2em;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+    .hearts {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .clock {
+        font-size: 1.2em;
+      }
+      .romantic-text {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Esse site é só pra mostrar o quanto eu te amo ❤️</h1>
+
+    <div class="video-container">
+      <video src="Video de namoro.mp4" controls></video>
+    </div>
+
+    <div class="clock" id="clock"></div>
+
+    <div class="fotos-container">
+      <img src="Design sem nome 1.png" alt="Foto 1">
+      <img src="Design sem nome 2.jpg" alt="Foto 2">
+      <img src="Design sem nome 3.png" alt="Foto 3">
+    </div>
+
+    <div class="romantic-text">
+      Desde que te conheci, cada segundo ao seu lado tem sido mágico. Você é a LUA em uma noite estrelada, mostrando a direção, iluminando meu caminho até você. Meu coração é seu para sempre. 💖
+    </div>
+
+    <div id="qrcode" style="margin-top: 30px; position: relative;"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    // Relógio
+    function updateClock() {
+      const startDate = new Date(2024, 11, 10, 7, 1); // 10 de dezembro às 07:01
+      const now = new Date();
+      const diffMs = now - startDate;
+      const diffSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(diffSeconds / (60 * 60 * 24));
+      const hours = Math.floor((diffSeconds % (60 * 60 * 24)) / (60 * 60));
+      const minutes = Math.floor((diffSeconds % (60 * 60)) / 60);
+      const seconds = diffSeconds % 60;
+      const clock = document.getElementById('clock');
+      clock.textContent = `Estamos juntos há: ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos.`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Coração animado
+    function createHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.className = "hearts";
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      heart.style.fontSize = Math.random() * 20 + 10 + "px";
+      heart.style.color = "#ff69b4";
+      heart.textContent = "💖";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    function heartRain(x, y) {
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          createHeart(x + Math.random() * 100 - 50, y + Math.random() * 100 - 50);
+        }, i * 50);
+      }
+    }
+
+    document.querySelectorAll("iframe, .fotos-container img").forEach(el => {
+      el.addEventListener("click", e => {
+        const rect = el.getBoundingClientRect();
+        heartRain(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      });
+    });
+  </script>
+</body>
+</html>
